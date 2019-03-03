@@ -1,0 +1,36 @@
+#include<stdio.h>
+#define Num 9
+int select_sort(int Array[]);
+int main(void)
+{
+	int Array[Num];
+	for(int i=0;i<Num;i++)
+	{
+		scanf("%d",&Array[i]);
+	}
+	select_sort(Array);
+	for(int i=0;i<Num;i++)
+	{
+		printf("%d ",Array[i]);
+	}
+	
+}
+int select_sort(int Array[])
+{
+	for(int k=0;k<Num;k++)
+	{		
+		int min=k;			/*用min记录最小元素的下标*/ 
+		for(int j=k+1;j<Num;j++) /*用for遍历，找到无序 序列最小元素*/
+		{
+			if(Array[min]>=Array[j]) {
+				min=j;
+		}
+			if (min != k)	{
+				int tmp;
+				tmp=Array[min];
+				Array[min]=Array[k];
+				Array[k]=tmp;
+			}
+		}
+	}
+}
