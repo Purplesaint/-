@@ -1,0 +1,44 @@
+#include<stdio.h>
+#define Num 9
+int Merge_sort(int Array[],int Tmp_Array[],int L,int R_End);
+int Merge(int Array[],int Tmp_Array[],int L,int R,int R_End); 
+
+int main(void)
+{
+	int Array[Num],Tmp_Array[Num];
+	for(int i=0;i<Num;i++)							
+	{
+		scanf("%d",&Array[i]);
+	}
+	Merge_sort(Array,Tmp_Array,0,Num-1);
+}
+
+int Merge_sort(int Array[],int Tmp_Array[],int L,int R_End)	/*merge_sort函数用来插挡板*/
+{
+	int center;
+	if(L<R_End)	{
+		center=(L+R_End)/2;
+		Merge_sort(Array,Tmp_Array,L,center);
+		Merge_sort(Array,Tmp_Array,center+1,R_End);
+		Merge(Array,Tmp_Array,L,center+1,R_End);	
+	}
+}
+
+int Merge(int Array[],int Tmp_Array[],int L,int R,int R_End) 
+{					/*merge函数用来将原数组数据导入临时数组
+								以及将临时数组数据导入回原数组			*/
+	int L_End=R-1;
+	int numbers=R_End-L+1;
+	int tmp=L;
+	while(L<=L_End&&R<=R_End)
+	{
+		if(Array[L]<=Array[R])
+			Tmp_Array[tmp++]=Array[L++];
+		else 
+			Tmp_Array[tmp++]=Array[R++];
+	}
+	while(L<=L_End)	Tmp_Array[tmp++]=Array[L++];
+	while(R<=R_End)	Tmp_Array[tmp++]=Array[R++];
+	for(int i = 0; i < numbers;i++, R_End-- )		/*赋值必须要放在这里，不可以放在主函数*/
+ 	Array[R_End] = Tmp_Array[R_End];
+}
