@@ -1,0 +1,35 @@
+/*	插入排序原始版
+	作者：电子科技大学信软学院 徐阳 
+	时间：2019年3月6号 
+*/
+
+#include<stdio.h>
+#define MaxN 10
+int Insert_Sort(int Array[],int Ele_number);
+int main(void)
+{
+	int Array[MaxN];
+	for(int i=0;i<MaxN;i++)
+	scanf ("%d",&Array[i]);
+	Insert_Sort(Array,MaxN);
+	for(int i=0;i<MaxN;i++)
+	printf("%d ", Array[i]);
+}
+
+int Insert_Sort(int Array[],int Ele_number)
+{
+	int tmp;						/*tmp用来稍后装无序区的元素，使得无序区出现空格*/ 
+	for(int i=1;i<Ele_number;i++)		/*i实际上是指需要判定的元素，也就是无序区左起第一个元素*/ 
+	{							/*i逐步向右移动，遍历有序区*/ 
+		if(Array[i-1]>Array[i])
+		{
+			int j=i-1;			/*j实际上是有序区最后一个元素，并且逐步向左移动，遍历有序区*/ 
+			tmp=Array[i];
+			for(;j>=0 && Array[j]>tmp;j--)
+			{
+				Array[j+1]=Array[j];
+			}
+			Array[j+1]=tmp;
+		}
+	}
+}
