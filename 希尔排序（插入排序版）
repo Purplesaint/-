@@ -1,0 +1,38 @@
+#include<stdio.h>
+#define MaxN 11
+void stepwise (int array[],int array_number,int Divide);
+void shell_sort (int array[],int array_number);
+int main(void)
+{
+	int Array[MaxN];
+	for(int i=0;i<MaxN;i++)
+	scanf ("%d",&Array[i]);       
+	
+	shell_sort(Array,MaxN);
+	for(int i=1;i<MaxN;i++)
+	printf("%d ", Array[i]);
+}
+
+void stepwise (int array[],int array_number,int Divide)
+{
+	for(int i = 1;i < array_number; i++)
+	{
+		int k=i;
+		array[0]=array[k];
+		for(;k-Divide>0;k-=Divide)
+		{
+			if(array[k-Divide] > array[k]) 
+			array[k]=array[k-Divide];
+			else break;           /*插入排序，如果前面有序区的元素比自己小，就退出*/ 
+		}					  /*因为再前面一定会更小*/ 
+		array[k]=array[0];
+	}
+}
+void shell_sort(int array[],int array_number)   
+{
+	int divide[3]={5,3,1},D_number=3;			/*divide数组存储着间隔大小*/ 
+	for(int i=0;i<D_number;i++)
+	{
+		stepwise(array,array_number,divide[i]); /*stepwise用于大踏步，也就是被分好组后，组内排序*/ 
+	}
+}
