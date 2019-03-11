@@ -1,0 +1,85 @@
+/*	插入排序原始版
+	作者：电子科技大学信软学院 徐阳 
+	时间：2019年3月6号 
+*/
+#include<stdio.h>
+#define MaxN 11
+void quick_sort(int array[],int low,int high);
+int index(int array[],int low,int high);
+int partition(int array[],int low,int high); 
+int main(void)
+{
+	int Array[MaxN];
+	for(int i=0;i<MaxN;i++)
+	scanf ("%d",&Array[i]);       
+	quick_sort(Array,1,MaxN-1);
+	for(int i=1;i<MaxN;i++)
+	printf("%d ", Array[i]);
+}
+
+void quick_sort(int array[],int low,int high) /*调用顺序：quicksort->partition->index*/
+{						
+	if (low<high)			/*如果low小于high，就可以排序，当相等时，则排序已完成*/ 
+	{
+		int med;
+		med=partition(array,low,high);	/*partition返回的是一个数的正确位置*/ 
+		quick_sort(array,low,med);		/*这个数是选取的一个数，用来划分区域*/ 
+		quick_sort(array,med+1,high);		/*划分为小于该数和大于该数的区域*/ 
+	}
+}
+
+int partition(int array[],int low,int high)
+{
+	if(low<high)
+	{
+		int idx=index(array,low,high);	/*index用来选出合适的数字，即上面说到的那个数*/ 
+		array[0]=array[idx];
+	
+		if(idx!=low)					/*选取的合适的数不能是最大和最小值*/ 
+		{							/*如果它选取的数不在区域最左边，则这个数与区域最左边的数交换*/ 
+			int tmp;
+			tmp=array[low];
+			array[low]=array[idx];
+			array[idx]=tmp;
+		}
+	}
+	
+	while (low<high)				/*移动low和high两个“指针”，遍历数组，*/ 
+	{
+		while(low<high && array[0]<array[high]) high--;
+		if(low<high)				/*跳出上面循环，有两种情况*/ 
+		{						/*如果不是指针重合的情况，*/ 
+			array[low]=array[high];	/*是有数字不在它应属于的区域，则要交换这个数*/  
+			low++;
+		}
+		while(low<high && array[low]<array[0]) low++;
+		if(low<high)
+		{
+			array[high]=array[low];
+			high--;
+		}
+	}
+	
+	array[low]=array[0];
+	return low;
+}
+int index(int array[],int low,int high) /*找出中间的数，作为那个划分区间的数*/ 
+{
+	int med=(low+high)/2,part;
+
+		int a=array[low]-array[med],b=array[low]-array[high],c=array[med]-array[high];
+		if(a)
+		{
+			if (c) part=med;
+			else if (b) part=high;
+			else part=low;
+		}
+		else if(b) 
+			part=low;
+		else 
+		{
+			if(c) part=med;
+			else	 part=high;
+		}
+		return part;	
+}
