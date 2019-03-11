@@ -1,3 +1,7 @@
+/*	希尔排序（插入排序版）
+	作者：电子科技大学信软学院 徐阳 
+	时间：2019年3月11号 
+*/
 #include<stdio.h>
 #define MaxN 11
 void stepwise (int array[],int array_number,int Divide);
